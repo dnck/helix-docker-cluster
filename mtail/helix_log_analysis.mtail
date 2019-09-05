@@ -1,0 +1,9 @@
+# Helix Log Analysis: Log parsing rules
+# Author: Daniel Cook
+# example usage:
+
+gauge total_transactions
+
+/totalTransactions = (?P<val>\d+$)/ {
+		total_transactions = int($val)
+}

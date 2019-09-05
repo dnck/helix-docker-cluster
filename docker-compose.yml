@@ -1,0 +1,165 @@
+version: "3"
+networks:
+  helix_network:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.20.0.0/24
+
+services:
+  coordinator:
+    build:
+      context: ./helix-1.0
+      dockerfile: Dockerfile0
+    hostname: coordinator
+    restart: unless-stopped
+    volumes:
+      - ./logs:/logs
+      - ./dbs/coordinator_db:/db
+      - ./dbs/coordinator_log:/mainnet.log
+      - ./spent_addresses/coordinator_db:/spent-addresses-db
+      - ./spent_addresses/coordinator_log:/spent-addresses-log
+      - ./snapshots/coordinator_snapshots:/snapshots
+    environment:
+      - JAVA_MAX_MEMORY=4096m
+      - JAVA_MIN_MEMORY=256m
+    ports:
+      - "8085:8085"
+      - "4100:4100/udp"
+    networks:
+      helix_network:
+        ipv4_address: 172.20.0.2
+
+  follower_1:
+    build:
+      context: ./helix-1.0
+      dockerfile: Dockerfile1
+    hostname: follower_1
+    restart: unless-stopped
+    volumes:
+      - ./logs:/logs
+      - ./dbs/follower_1_db:/db
+      - ./dbs/follower_1_log:/mainnet.log
+      - ./spent_addresses/follower_1_db:/spent-addresses-db
+      - ./spent_addresses/follower_1_log:/spent-addresses-log
+      - ./snapshots/follower_1_snapshots:/snapshots
+    environment:
+      - JAVA_MAX_MEMORY=4096m
+      - JAVA_MIN_MEMORY=256m
+    ports:
+      - "8086:8086"
+      - "4101:4101/udp"
+    networks:
+      helix_network:
+        ipv4_address: 172.20.0.3
+
+  follower_2:
+    build:
+      context: ./helix-1.0
+      dockerfile: Dockerfile2
+    hostname: follower_2
+    restart: unless-stopped
+    volumes:
+      - ./logs:/logs
+      - ./dbs/follower_2_db:/db
+      - ./dbs/follower_2_log:/mainnet.log
+      - ./spent_addresses/follower_2_db:/spent-addresses-db
+      - ./spent_addresses/follower_2_log:/spent-addresses-log
+      - ./snapshots/follower_2_snapshots:/snapshots
+    environment:
+      - JAVA_MAX_MEMORY=4096m
+      - JAVA_MIN_MEMORY=256m
+    ports:
+      - "8087:8087"
+      - "4102:4102/udp"
+    networks:
+      helix_network:
+        ipv4_address: 172.20.0.4
+
+  follower_3:
+    build:
+      context: ./helix-1.0
+      dockerfile: Dockerfile3
+    hostname: follower_3
+    restart: unless-stopped
+    volumes:
+      - ./logs:/logs
+      - ./dbs/follower_3_db:/db
+      - ./dbs/follower_3_log:/mainnet.log
+      - ./spent_addresses/follower_3_db:/spent-addresses-db
+      - ./spent_addresses/follower_3_log:/spent-addresses-log
+      - ./snapshots/follower_3_snapshots:/snapshots
+    environment:
+      - JAVA_MAX_MEMORY=4096m
+      - JAVA_MIN_MEMORY=256m
+    ports:
+      - "8088:8088"
+      - "4103:4103/udp"
+    networks:
+      helix_network:
+        ipv4_address: 172.20.0.5
+
+  follower_4:
+    build:
+      context: ./helix-1.0
+      dockerfile: Dockerfile4
+    hostname: follower_4
+    restart: unless-stopped
+    volumes:
+      - ./logs:/logs
+      - ./dbs/follower_4_db:/db
+      - ./dbs/follower_4_log:/mainnet.log
+      - ./spent_addresses/follower_4_db:/spent-addresses-db
+      - ./spent_addresses/follower_4_log:/spent-addresses-log
+      - ./snapshots/follower_4_snapshots:/snapshots
+    environment:
+      - JAVA_MAX_MEMORY=4096m
+      - JAVA_MIN_MEMORY=256m
+    ports:
+      - "8089:8089"
+      - "4104:4104/udp"
+    networks:
+      helix_network:
+        ipv4_address: 172.20.0.6
+
+  nginx:
+    restart: unless-stopped
+    build: ./nginx/
+    ports:
+      - "80:80"
+      - "81:81"
+    networks:
+      helix_network:
+        ipv4_address: 172.20.0.7
+
+  prometheus:
+    restart: unless-stopped
+    build: ./prometheus/
+    ports:
+      - "9090:9090"
+    networks:
+      helix_network:
+        ipv4_address: 172.20.0.8
+
+  grafana:
+    restart: unless-stopped
+    build: ./grafana/
+    ports:
+      - "3000:3000"
+    networks:
+      helix_network:
+        ipv4_address: 172.20.0.9
+
+  mtail:
+    build:
+      context: ./mtail
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    ports:
+      - "3903:3903"
+    volumes:
+      - ./logs:/logs
+    networks:
+      helix_network:
+        ipv4_address: 172.20.0.10
+    command: ["-progs", "./helix_log_analysis.mtail", "-logs", "/logs/*.log"]

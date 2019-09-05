@@ -1,7 +1,10 @@
 /dbs/*
 snapshots/*
 spent_addresses/*
+logs/*.log
 private/*
 helix-1.0/src/main/resources/Coordinator.key
 helix-1.0/target/*.jar
 helix-1.0/configs/*.ini
+helix-1.0/Dockerfile*
+helix-1.0/*.sh
