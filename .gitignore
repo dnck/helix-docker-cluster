@@ -1,0 +1,7 @@
+/db/*
+snapshots/*
+spent_addresses/*
+private/*
+helix-1.0/src/main/resources/Coordinator.key
+helix-1.0/target/*.jar
+helix-1.0/configs/*.ini
