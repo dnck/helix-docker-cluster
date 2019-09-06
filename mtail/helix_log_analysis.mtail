@@ -4,6 +4,12 @@
 
 gauge total_transactions
 
+gauge attach_store_bcast_exec_time
+
 /totalTransactions = (?P<val>\d+$)/ {
 		total_transactions = int($val)
+}
+
+/attachStoreAndBroadcast exec time (ms) = (?P<val>\d+$)/ {
+	attach_store_bcast_exec_time = int($val)
 }
