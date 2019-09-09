@@ -1,3 +1,5 @@
+<img src="https://hlx.ai/images/Helix_Logo-white.svg" alt="helix logo" width="300px"/>
+
 # How to run a helix cluster at home with basic instrumentation
 This is an example of using docker-compose to run a cluster of nodes on a host machine.
 
