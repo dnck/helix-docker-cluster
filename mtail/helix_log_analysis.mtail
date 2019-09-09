@@ -1,6 +1,7 @@
 # Helix Log Analysis: Log parsing rules
 # Author: Daniel Cook
 # example usage:
+# ./mtail --one_shot --progs /home/hlx-dev/mtail/mtail_repo/examples/helix/test.mtail --logs /home/hlx-dev/mtail/mtail_repo/examples/helix/test.log --logtostderr -port 1234
 
 gauge total_transactions
 
@@ -10,6 +11,6 @@ gauge attach_store_bcast_exec_time
 		total_transactions = int($val)
 }
 
-/attachStoreAndBroadcast exec time (ms) = (?P<val>\d+$)/ {
+/attachStoreAndBroadcast_exec_time = (?P<val>\d+$)/ {
 	attach_store_bcast_exec_time = int($val)
 }
