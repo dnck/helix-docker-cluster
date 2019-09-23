@@ -43,7 +43,7 @@ HXI_DIR =  hxi
 HEADLESS = true
 DB_PATH = db
 LOCAL_SNAPSHOTS_DEPTH = 2
-MS_DELAY = 0
+#NOMINEE =
 SPAM_DELAY = 0
 # important that you use the dnck fork instrumentation branch for this to make
 # sense:
@@ -61,44 +61,22 @@ networks:
         - subnet: 172.20.0.0/24
 
 services:
-  coordinator:
-    build:
-      context: ./helix-1.0
-      dockerfile: Dockerfile0
-    hostname: coordinator
-    restart: unless-stopped
-    volumes:
-      - ./logs:/logs
-      - ./dbs/coordinator_db:/db
-      - ./dbs/coordinator_log:/mainnet.log
-      - ./spent_addresses/coordinator_db:/spent-addresses-db
-      - ./spent_addresses/coordinator_log:/spent-addresses-log
-      - ./snapshots/coordinator_snapshots:/snapshots
-    environment:
-      - JAVA_MAX_MEMORY=4096m
-      - JAVA_MIN_MEMORY=256m
-    ports:
-      - "8085:8085"
-      - "4100:4100/udp"
-    networks:
-      helix_network:
-        ipv4_address: 172.20.0.2
 """
 
 API_COMPOSE = """
-  follower_{}:
+  node_{}:
     build:
       context: ./helix-1.0
       dockerfile: Dockerfile{}
-    hostname: follower_{}
+    hostname: node_{}
     restart: unless-stopped
     volumes:
       - ./logs:/logs
-      - ./dbs/follower_{}_db:/db
-      - ./dbs/follower_{}_log:/mainnet.log
-      - ./spent_addresses/follower_{}_db:/spent-addresses-db
-      - ./spent_addresses/follower_{}_log:/spent-addresses-log
-      - ./snapshots/follower_{}_snapshots:/snapshots
+      - ./dbs/node_{}_db:/db
+      - ./dbs/node_{}_log:/mainnet.log
+      - ./spent_addresses/node_{}_db:/spent-addresses-db
+      - ./spent_addresses/node_{}_log:/spent-addresses-log
+      - ./snapshots/node_{}_snapshots:/snapshots
     environment:
       - JAVA_MAX_MEMORY=4096m
       - JAVA_MIN_MEMORY=256m
@@ -153,15 +131,6 @@ PROM_YML = """
 global:
   scrape_interval: 5s
   evaluation_interval: 10s
-
-# rule_files:
-#   - 'helix_rules.yml'
-#
-# alerting:
-#   alertmanagers:
-#   - static_configs:
-#     - targets:
-#        - alertmanager:9093
 
 scrape_configs:
   - job_name: 'helix_logs'
@@ -243,10 +212,6 @@ if __name__ == "__main__":
         metavar='Interval between spam messages in miliseconds.',
         type=int, default=40, help=''
         )
-    parser.add_argument('-ms_delay',
-        metavar='Interval between milestones in seconds.',
-        type=int, default=5, help=''
-        )
 
     args = parser.parse_args()
 
@@ -258,11 +223,8 @@ if __name__ == "__main__":
     zmq_port_start = args.zmq_port_start
     num_nodes = args.num_nodes
     spam_interval = args.spam_interval
-    ms_delay = args.ms_delay
 
     udp_port = 4100
-    # prometheus pushers were from the prom client inside java
-    #prometheus_pushers = []
 
     topology = SmallWorldTopology(
         num_nodes,
@@ -288,9 +250,9 @@ if __name__ == "__main__":
     for node_id in range(num_nodes):
 
         node_docker_file = DOCKERFILE.format(
-            api_port_start,api_port_start,
-            udp_port_start,udp_port_start,
-            tcp_port_start,tcp_port_start,
+            api_port_start, api_port_start,
+            udp_port_start, udp_port_start,
+            tcp_port_start, tcp_port_start,
             node_id)
 
         host = api_host + str(docker_inet_start)
@@ -318,25 +280,27 @@ if __name__ == "__main__":
             "NEIGHBORS", "NEIGHBORS = {}".format(node_neighbors)
             )
 
-        if node_id == 0:
+        if node_id in [0, 1, 2, 3, 4]:
             config_file = \
-                config_file.replace('MS_DELAY = 0', 'MS_DELAY = {}'.format(
-                ms_delay
-                )
-            )
-        else:
-            NGINX_CONFIG += \
-                '      server {} weight=1;\n'.format(host+':'+str(api_port_start))
-            config_file = \
-                config_file.replace('SPAM_DELAY = 0', 'SPAM_DELAY = {}'.format(
-                    spam_interval
+                config_file.replace('#NOMINEE =', 'NOMINEE = {}'.format(
+                './nominees/nominee{}/nominee_seed_{}.txt'.format(
+                    node_id+1, node_id+1
                     )
                 )
-            BASE_COMPOSE = BASE_COMPOSE + API_COMPOSE.format(
-                node_id, node_id, node_id, node_id, node_id, node_id, node_id,
-                node_id, api_port_start, api_port_start, udp_port_start,
-                udp_port_start, host
             )
+        #else:
+        NGINX_CONFIG += \
+            '      server {} weight=1;\n'.format(host+':'+str(api_port_start))
+        config_file = \
+            config_file.replace('SPAM_DELAY = 0', 'SPAM_DELAY = {}'.format(
+                spam_interval
+                )
+            )
+        BASE_COMPOSE = BASE_COMPOSE + API_COMPOSE.format(
+            node_id, node_id, node_id, node_id, node_id, node_id, node_id,
+            node_id, api_port_start, api_port_start, udp_port_start,
+            udp_port_start, host
+        )
         #prometheus_pushers.append(host+":2019")
         docker_inet_start += 1
         api_port_start += 1
