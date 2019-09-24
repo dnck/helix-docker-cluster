@@ -1,4 +1,3 @@
-The compiled jar comes from the dev-instrumentation branch of
-the dnck fork of the helix-1.0 project. It is available at,
-https://github.com/dnck/helix-1.0/tree/dev-instrumentation
-hello
+Put the compiled jar in here. Works best with the dev-remove-graphstream branch of
+the dnck fork of the pendulum project. It is available at,
+https://github.com/dnck/pendulum/tree/dev-remove-graphstream
