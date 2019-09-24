@@ -15,6 +15,8 @@ services:
     hostname: node_0
     restart: unless-stopped
     volumes:
+      - ./helix-1.0/target:/target
+      - ./helix-1.0/configs:/configs
       - ./logs:/logs
       - ./dbs/node_0_db:/db
       - ./dbs/node_0_log:/mainnet.log
@@ -38,6 +40,8 @@ services:
     hostname: node_1
     restart: unless-stopped
     volumes:
+      - ./helix-1.0/target:/target
+      - ./helix-1.0/configs:/configs
       - ./logs:/logs
       - ./dbs/node_1_db:/db
       - ./dbs/node_1_log:/mainnet.log
@@ -61,6 +65,8 @@ services:
     hostname: node_2
     restart: unless-stopped
     volumes:
+      - ./helix-1.0/target:/target
+      - ./helix-1.0/configs:/configs
       - ./logs:/logs
       - ./dbs/node_2_db:/db
       - ./dbs/node_2_log:/mainnet.log
@@ -84,6 +90,8 @@ services:
     hostname: node_3
     restart: unless-stopped
     volumes:
+      - ./helix-1.0/target:/target
+      - ./helix-1.0/configs:/configs
       - ./logs:/logs
       - ./dbs/node_3_db:/db
       - ./dbs/node_3_log:/mainnet.log
@@ -107,6 +115,8 @@ services:
     hostname: node_4
     restart: unless-stopped
     volumes:
+      - ./helix-1.0/target:/target
+      - ./helix-1.0/configs:/configs
       - ./logs:/logs
       - ./dbs/node_4_db:/db
       - ./dbs/node_4_log:/mainnet.log
@@ -130,6 +140,8 @@ services:
     hostname: node_5
     restart: unless-stopped
     volumes:
+      - ./helix-1.0/target:/target
+      - ./helix-1.0/configs:/configs
       - ./logs:/logs
       - ./dbs/node_5_db:/db
       - ./dbs/node_5_log:/mainnet.log
@@ -153,6 +165,8 @@ services:
     hostname: node_6
     restart: unless-stopped
     volumes:
+      - ./helix-1.0/target:/target
+      - ./helix-1.0/configs:/configs
       - ./logs:/logs
       - ./dbs/node_6_db:/db
       - ./dbs/node_6_log:/mainnet.log
@@ -176,6 +190,8 @@ services:
     hostname: node_7
     restart: unless-stopped
     volumes:
+      - ./helix-1.0/target:/target
+      - ./helix-1.0/configs:/configs
       - ./logs:/logs
       - ./dbs/node_7_db:/db
       - ./dbs/node_7_log:/mainnet.log

@@ -19,7 +19,7 @@ EXPOSE {}:{}
 EXPOSE {}:{}
 EXPOSE {}:{}
 
-COPY . ./
+COPY ./src ./src
 
 ENV JAVA_OPTIONS="-XX:+UnlockExperimentalVMOptions -XX:+DisableAttachMechanism -XX:InitiatingHeapOccupancyPercent=60 -XX:G1MaxNewSizePercent=75 -XX:MaxGCPauseMillis=10000 -XX:+UseG1GC" JAVA_MIN_MEMORY=2G JAVA_MAX_MEMORY=4G
 
@@ -44,6 +44,7 @@ HEADLESS = true
 DB_PATH = db
 LOCAL_SNAPSHOTS_DEPTH = 2
 #NOMINEE =
+#NOMINEE_KEYFILE =
 SPAM_DELAY = 0
 # important that you use the dnck fork instrumentation branch for this to make
 # sense:
@@ -71,6 +72,8 @@ API_COMPOSE = """
     hostname: node_{}
     restart: unless-stopped
     volumes:
+      - ./helix-1.0/target:/target
+      - ./helix-1.0/configs:/configs
       - ./logs:/logs
       - ./dbs/node_{}_db:/db
       - ./dbs/node_{}_log:/mainnet.log
@@ -283,11 +286,19 @@ if __name__ == "__main__":
         if node_id in [0, 1, 2, 3, 4]:
             config_file = \
                 config_file.replace('#NOMINEE =', 'NOMINEE = {}'.format(
-                './nominees/nominee{}/nominee_seed_{}.txt'.format(
+                'src/main/resources/nominees/nominee{}/nominee_seed_{}.txt'.format(
                     node_id+1, node_id+1
                     )
                 )
             )
+            config_file = \
+                config_file.replace(
+                    '#NOMINEE_KEYFILE =', 'NOMINEE_KEYFILE = {}'.format(
+                        '/nominees/nominee{}/Nominee_{}.key'.format(
+                            node_id+1, node_id+1
+                        )
+                    )
+                )
         #else:
         NGINX_CONFIG += \
             '      server {} weight=1;\n'.format(host+':'+str(api_port_start))

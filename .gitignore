@@ -10,3 +10,8 @@ helix-1.0/Dockerfile*
 helix-1.0/*.sh
 rolled_logs
 helix-1.0/nominees/
+helix-1.0/src/main/resources/nominees/nominee1
+helix-1.0/src/main/resources/nominees/nominee2
+helix-1.0/src/main/resources/nominees/nominee3
+helix-1.0/src/main/resources/nominees/nominee4
+helix-1.0/src/main/resources/nominees/nominee5
