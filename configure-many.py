@@ -237,7 +237,7 @@ if __name__ == "__main__":
 
     if os.path.isdir("./helix-1.0/configs"):
         shutil.rmtree(os.path.normpath("./helix-1.0/configs"))
-        os.mkdir(os.path.normpath("./helix-1.0/configs"))
+    os.mkdir(os.path.normpath("./helix-1.0/configs"))
 
     if not os.path.isdir("./snapshots"):
         os.mkdir(os.path.normpath("./snapshots"))
