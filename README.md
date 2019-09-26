@@ -10,7 +10,7 @@ This is an example of using docker-compose to run a cluster of nodes on a host m
 
 ## QUICKSTART
 1. **Build the dev branch of pendulum.**
-https://github.com/dnck/pendulum/tree/dev-remove-graphstream
+https://github.com/HelixNetwork/pendulum/tree/dev
 2. **Put the jar into this repo's ./helix-1.0/target directory**
 3. On command line, type ```python configure-many.py -num_nodes 8 -spam_interval 0 && docker-compose up --build -d```
 
