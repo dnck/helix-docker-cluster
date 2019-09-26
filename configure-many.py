@@ -43,8 +43,8 @@ HXI_DIR =  hxi
 HEADLESS = true
 DB_PATH = db
 LOCAL_SNAPSHOTS_DEPTH = 2
-#NOMINEE =
-#NOMINEE_KEYFILE =
+#VALIDATOR =
+#VALIDATOR_KEYFILE =
 SPAM_DELAY = 0
 # important that you use the dnck fork instrumentation branch for this to make
 # sense:
@@ -286,7 +286,7 @@ if __name__ == "__main__":
 
         if node_id in [0, 1, 2, 3, 4]:
             config_file = \
-                config_file.replace('#NOMINEE =', 'NOMINEE = {}'.format(
+                config_file.replace('#VALIDATOR =', 'VALIDATOR = {}'.format(
                 'src/main/resources/nominees/nominee{}/nominee_seed_{}.txt'.format(
                     node_id+1, node_id+1
                     )
@@ -294,7 +294,7 @@ if __name__ == "__main__":
             )
             config_file = \
                 config_file.replace(
-                    '#NOMINEE_KEYFILE =', 'NOMINEE_KEYFILE = {}'.format(
+                    '#VALIDATOR_KEYFILE =', 'VALIDATOR_KEYFILE = {}'.format(
                         '/nominees/nominee{}/Nominee_{}.key'.format(
                             node_id+1, node_id+1
                         )
