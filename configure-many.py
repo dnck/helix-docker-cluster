@@ -44,6 +44,7 @@ HEADLESS = true
 DB_PATH = db
 LOCAL_SNAPSHOTS_DEPTH = 2
 #VALIDATOR =
+#VALIDATOR_SEED_PATH =
 #VALIDATOR_KEYFILE =
 SPAM_DELAY = 0
 LOCAL_SNAPSHOTS_ENABLED = true
@@ -293,9 +294,11 @@ if __name__ == "__main__":
             "NEIGHBORS", "NEIGHBORS = {}".format(node_neighbors)
             )
 
-        if node_id in [0, 1, 2, 3, 4]:
+        if node_id == 0:
             config_file = \
-                config_file.replace('#VALIDATOR =', 'VALIDATOR = {}'.format(
+                config_file.replace('#VALIDATOR =', 'VALIDATOR = true')
+            config_file = \
+                config_file.replace('#VALIDATOR_SEED_PATH =', 'VALIDATOR_SEED_PATH = {}'.format(
                 'src/main/resources/nominees/nominee{}/nominee_seed_{}.txt'.format(
                     node_id+1, node_id+1
                     )
@@ -309,7 +312,7 @@ if __name__ == "__main__":
                         )
                     )
                 )
-        #else:
+
         NGINX_CONFIG += \
             '      server {} weight=1;\n'.format(host+':'+str(api_port_start))
         config_file = \
