@@ -7,6 +7,6 @@ scrape_configs:
   - job_name: 'helix_logs'
     scrape_interval: 5s
     static_configs:
-      - targets: ['172.20.0.13:3903']
+      - targets: ['172.20.0.9:3903']
         labels:
           group: 'logs'
