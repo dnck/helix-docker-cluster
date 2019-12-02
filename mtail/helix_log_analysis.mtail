@@ -3,8 +3,17 @@
 # example usage:
 # ./mtail --one_shot --progs /home/hlx-dev/mtail/mtail_repo/examples/helix/test.mtail --logs /home/hlx-dev/mtail/mtail_repo/examples/helix/test.log --logtostderr -port 1234
 
-gauge total_transactions
-
-/rstats = (?P<val>\d+$)/ {
-		total_transactions = int($val)
+gauge rcv by filename
+gauge brdcst by filename
+gauge rqst by filename
+gauge reply by filename
+gauge stored by filename
+ 
+/rstat (?P<val1>\d+) (?P<val2>\d+) (?P<val3>\d+) (?P<val4>\d+) (?P<val5>\d+$)/ {
+   rcv[getfilename()] = $val1
+   brdcst[getfilename()] = $val2
+   rqst[getfilename()] = $val3
+   reply[getfilename()] = $val4
+   stored[getfilename()] = $val5
 }
+
