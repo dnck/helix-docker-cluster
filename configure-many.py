@@ -46,8 +46,6 @@ LOCAL_SNAPSHOTS_DEPTH = 2
 #VALIDATOR =
 #VALIDATOR_KEYFILE =
 SPAM_DELAY = 0
-# important that you use the dnck fork instrumentation branch for this to make
-# sense:
 LOCAL_SNAPSHOTS_ENABLED = true
 LOCAL_SNAPSHOTS_BASE_PATH = snapshots
 SAVELOG_XML_FILE = /logback-save.xml
@@ -181,6 +179,21 @@ class SmallWorldTopology():
     def get_matrix(self):
         self.overlay_matrix = nx.to_numpy_matrix(self.overlay)
 
+class FullMeshTopology():
+    def __init__(
+        self,
+        num_nodes
+    ):
+        self.overlay = nx.complete_graph(num_nodes)
+
+    def get_neighbor(self, node_id):
+        if list(self.overlay.neighbors(node_id)):
+            return list(self.overlay.neighbors(node_id))
+
+    def get_matrix(self):
+        self.overlay_matrix = nx.to_numpy_matrix(self.overlay)
+
+
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='')
     parser.add_argument('-docker_inet_start',
@@ -229,11 +242,7 @@ if __name__ == "__main__":
 
     udp_port = 4100
 
-    topology = SmallWorldTopology(
-        num_nodes,
-        average_in_degree=3,
-        probability_addition_innode=0.1
-        )
+    topology = FullMeshTopology(num_nodes)
 
     if os.path.isdir("./helix-1.0/configs"):
         shutil.rmtree(os.path.normpath("./helix-1.0/configs"))

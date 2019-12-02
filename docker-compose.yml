@@ -108,106 +108,6 @@ services:
       helix_network:
         ipv4_address: 172.20.0.5
 
-  node_4:
-    build:
-      context: ./helix-1.0
-      dockerfile: Dockerfile4
-    hostname: node_4
-    restart: unless-stopped
-    volumes:
-      - ./helix-1.0/target:/target
-      - ./helix-1.0/configs:/configs
-      - ./logs:/logs
-      - ./dbs/node_4_db:/db
-      - ./dbs/node_4_log:/mainnet.log
-      - ./spent_addresses/node_4_db:/spent-addresses-db
-      - ./spent_addresses/node_4_log:/spent-addresses-log
-      - ./snapshots/node_4_snapshots:/snapshots
-    environment:
-      - JAVA_MAX_MEMORY=4096m
-      - JAVA_MIN_MEMORY=256m
-    ports:
-      - "8089:8089"
-      - "4104:4104/udp"
-    networks:
-      helix_network:
-        ipv4_address: 172.20.0.6
-
-  node_5:
-    build:
-      context: ./helix-1.0
-      dockerfile: Dockerfile5
-    hostname: node_5
-    restart: unless-stopped
-    volumes:
-      - ./helix-1.0/target:/target
-      - ./helix-1.0/configs:/configs
-      - ./logs:/logs
-      - ./dbs/node_5_db:/db
-      - ./dbs/node_5_log:/mainnet.log
-      - ./spent_addresses/node_5_db:/spent-addresses-db
-      - ./spent_addresses/node_5_log:/spent-addresses-log
-      - ./snapshots/node_5_snapshots:/snapshots
-    environment:
-      - JAVA_MAX_MEMORY=4096m
-      - JAVA_MIN_MEMORY=256m
-    ports:
-      - "8090:8090"
-      - "4105:4105/udp"
-    networks:
-      helix_network:
-        ipv4_address: 172.20.0.7
-
-  node_6:
-    build:
-      context: ./helix-1.0
-      dockerfile: Dockerfile6
-    hostname: node_6
-    restart: unless-stopped
-    volumes:
-      - ./helix-1.0/target:/target
-      - ./helix-1.0/configs:/configs
-      - ./logs:/logs
-      - ./dbs/node_6_db:/db
-      - ./dbs/node_6_log:/mainnet.log
-      - ./spent_addresses/node_6_db:/spent-addresses-db
-      - ./spent_addresses/node_6_log:/spent-addresses-log
-      - ./snapshots/node_6_snapshots:/snapshots
-    environment:
-      - JAVA_MAX_MEMORY=4096m
-      - JAVA_MIN_MEMORY=256m
-    ports:
-      - "8091:8091"
-      - "4106:4106/udp"
-    networks:
-      helix_network:
-        ipv4_address: 172.20.0.8
-
-  node_7:
-    build:
-      context: ./helix-1.0
-      dockerfile: Dockerfile7
-    hostname: node_7
-    restart: unless-stopped
-    volumes:
-      - ./helix-1.0/target:/target
-      - ./helix-1.0/configs:/configs
-      - ./logs:/logs
-      - ./dbs/node_7_db:/db
-      - ./dbs/node_7_log:/mainnet.log
-      - ./spent_addresses/node_7_db:/spent-addresses-db
-      - ./spent_addresses/node_7_log:/spent-addresses-log
-      - ./snapshots/node_7_snapshots:/snapshots
-    environment:
-      - JAVA_MAX_MEMORY=4096m
-      - JAVA_MIN_MEMORY=256m
-    ports:
-      - "8092:8092"
-      - "4107:4107/udp"
-    networks:
-      helix_network:
-        ipv4_address: 172.20.0.9
-
   nginx:
     restart: unless-stopped
     build: ./nginx/
@@ -216,7 +116,7 @@ services:
       - "81:81"
     networks:
       helix_network:
-        ipv4_address: 172.20.0.10
+        ipv4_address: 172.20.0.6
 
   prometheus:
     restart: unless-stopped
@@ -225,7 +125,7 @@ services:
       - "9090:9090"
     networks:
       helix_network:
-        ipv4_address: 172.20.0.11
+        ipv4_address: 172.20.0.7
 
   grafana:
     restart: unless-stopped
@@ -234,7 +134,7 @@ services:
       - "3000:3000"
     networks:
       helix_network:
-        ipv4_address: 172.20.0.12
+        ipv4_address: 172.20.0.8
 
   mtail:
     build:
@@ -247,5 +147,5 @@ services:
       - ./logs:/logs
     networks:
       helix_network:
-        ipv4_address: 172.20.0.13
+        ipv4_address: 172.20.0.9
     command: ["-progs", "./helix_log_analysis.mtail", "-logs", "/logs/*.log"]
