@@ -23,7 +23,7 @@ COPY ./src ./src
 
 ENV JAVA_OPTIONS="-XX:+UnlockExperimentalVMOptions -XX:+DisableAttachMechanism -XX:InitiatingHeapOccupancyPercent=60 -XX:G1MaxNewSizePercent=75 -XX:MaxGCPauseMillis=10000 -XX:+UseG1GC" JAVA_MIN_MEMORY=2G JAVA_MAX_MEMORY=4G
 
-CMD java -jar ./target/*.jar --config ./configs/config{}.ini
+CMD java -Dinstance.name={} -jar ./target/*.jar --config ./configs/config{}.ini
 """
 
 CONFIG =  """#NODE {} CONFIG
@@ -267,7 +267,7 @@ if __name__ == "__main__":
             api_port_start, api_port_start,
             udp_port_start, udp_port_start,
             tcp_port_start, tcp_port_start,
-            node_id)
+            "node_"+str(node_id), node_id)
 
         host = api_host + str(docker_inet_start)
 
