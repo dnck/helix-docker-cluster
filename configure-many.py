@@ -297,21 +297,21 @@ if __name__ == "__main__":
         if node_id == 0:
             config_file = \
                 config_file.replace('#VALIDATOR =', 'VALIDATOR = true')
-            config_file = \
-                config_file.replace('#VALIDATOR_SEED_PATH =', 'VALIDATOR_SEED_PATH = {}'.format(
-                'src/main/resources/nominees/nominee{}/nominee_seed_{}.txt'.format(
-                    node_id+1, node_id+1
-                    )
-                )
-            )
-            config_file = \
-                config_file.replace(
-                    '#VALIDATOR_KEYFILE =', 'VALIDATOR_KEYFILE = {}'.format(
-                        '/nominees/nominee{}/Nominee_{}.key'.format(
-                            node_id+1, node_id+1
-                        )
-                    )
-                )
+            # config_file = \
+            #     config_file.replace('#VALIDATOR_SEED_PATH =', 'VALIDATOR_SEED_PATH = {}'.format(
+            #     'src/main/resources/nominees/nominee{}/nominee_seed_{}.txt'.format(
+            #         node_id+1, node_id+1
+            #         )
+            #     )
+            # )
+            # config_file = \
+            #     config_file.replace(
+            #         '#VALIDATOR_KEYFILE =', 'VALIDATOR_KEYFILE = {}'.format(
+            #             '/nominees/nominee{}/Nominee_{}.key'.format(
+            #                 node_id+1, node_id+1
+            #             )
+            #         )
+            #     )
 
         NGINX_CONFIG += \
             '      server {} weight=1;\n'.format(host+':'+str(api_port_start))
