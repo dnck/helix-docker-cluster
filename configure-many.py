@@ -95,8 +95,8 @@ NGINX_COMPOSE = """
     restart: unless-stopped
     build: ./nginx/
     ports:
-      - "80:80"
-      - "81:81"
+      - "7423:7423"
+      - "8423:8423"
     networks:
       helix_network:
         ipv4_address: 172.20.0.{}
@@ -367,14 +367,14 @@ upstream helix_grafana {
         f.write(BASE_COMPOSE)
     NGINX_CONFIG += """
     server {
-        listen 80;
+        listen 7423;
         server_name helix_cluster;
         location / {
             proxy_pass http://helix_cluster;
         }
     }
     server {
-        listen 81;
+        listen 8423;
         server_name helix_grafana;
         location / {
             proxy_pass http://helix_grafana;
