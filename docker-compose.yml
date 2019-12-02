@@ -148,4 +148,4 @@ services:
     networks:
       helix_network:
         ipv4_address: 172.20.0.9
-    command: ["-progs", "./helix_log_analysis.mtail", "-logs", "/logs/*.log"]
+    command: ["-progs", "./helix_log_analysis.mtail", "-logs", "/logs/tangle-node_*.log"]
