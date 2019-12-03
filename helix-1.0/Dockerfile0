@@ -1,0 +1,16 @@
+
+FROM ubuntu:16.04 as builder
+
+FROM openjdk:jre-slim
+
+RUN apt-get update && apt-get install -y --no-install-recommends socat && rm -rf /var/lib/apt/lists/*
+
+EXPOSE 8085:8085
+EXPOSE 4100:4100
+EXPOSE 5100:5100
+
+COPY ./src ./src
+
+ENV JAVA_OPTIONS="-XX:+UnlockExperimentalVMOptions -XX:+DisableAttachMechanism -XX:InitiatingHeapOccupancyPercent=60 -XX:G1MaxNewSizePercent=75 -XX:MaxGCPauseMillis=10000 -XX:+UseG1GC" JAVA_MIN_MEMORY=2G JAVA_MAX_MEMORY=4G
+
+CMD java -Dinstance.name=node_0 -jar ./target/*.jar --config ./configs/config0.ini
