@@ -15,6 +15,7 @@ services:
     hostname: node_0
     restart: unless-stopped
     volumes:
+      - ./helix-1.0/src:/src
       - ./helix-1.0/target:/target
       - ./helix-1.0/configs:/configs
       - ./logs:/logs
@@ -40,6 +41,7 @@ services:
     hostname: node_1
     restart: unless-stopped
     volumes:
+      - ./helix-1.0/src:/src
       - ./helix-1.0/target:/target
       - ./helix-1.0/configs:/configs
       - ./logs:/logs
@@ -65,6 +67,7 @@ services:
     hostname: node_2
     restart: unless-stopped
     volumes:
+      - ./helix-1.0/src:/src
       - ./helix-1.0/target:/target
       - ./helix-1.0/configs:/configs
       - ./logs:/logs
@@ -90,6 +93,7 @@ services:
     hostname: node_3
     restart: unless-stopped
     volumes:
+      - ./helix-1.0/src:/src
       - ./helix-1.0/target:/target
       - ./helix-1.0/configs:/configs
       - ./logs:/logs

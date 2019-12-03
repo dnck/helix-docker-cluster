@@ -19,8 +19,6 @@ EXPOSE {}:{}
 EXPOSE {}:{}
 EXPOSE {}:{}
 
-COPY ./src ./src
-
 ENV JAVA_OPTIONS="-XX:+UnlockExperimentalVMOptions -XX:+DisableAttachMechanism -XX:InitiatingHeapOccupancyPercent=60 -XX:G1MaxNewSizePercent=75 -XX:MaxGCPauseMillis=10000 -XX:+UseG1GC" JAVA_MIN_MEMORY=2G JAVA_MAX_MEMORY=4G
 
 CMD java -Dinstance.name={} -jar ./target/*.jar --config ./configs/config{}.ini
@@ -71,6 +69,7 @@ API_COMPOSE = """
     hostname: node_{}
     restart: unless-stopped
     volumes:
+      - ./helix-1.0/src:/src
       - ./helix-1.0/target:/target
       - ./helix-1.0/configs:/configs
       - ./logs:/logs
