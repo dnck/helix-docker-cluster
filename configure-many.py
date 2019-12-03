@@ -20,7 +20,6 @@ EXPOSE {}:{}
 EXPOSE {}:{}
 
 COPY ./src ./src
-COPY /var/jenkins_home/workspace/my-pendulum/target/pen*.jar ./target
 
 ENV JAVA_OPTIONS="-XX:+UnlockExperimentalVMOptions -XX:+DisableAttachMechanism -XX:InitiatingHeapOccupancyPercent=60 -XX:G1MaxNewSizePercent=75 -XX:MaxGCPauseMillis=10000 -XX:+UseG1GC" JAVA_MIN_MEMORY=2G JAVA_MAX_MEMORY=4G
 
