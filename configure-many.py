@@ -25,29 +25,30 @@ CMD java -Dinstance.name={} -jar ./target/*.jar --config ./configs/config{}.ini
 """
 
 CONFIG =  """#NODE {} CONFIG
+[BRANCH]
+#uncomment for testnet
+#TESTNET = true
+[API]
 API_HOST = {}
-PORT = {}
+API_PORT = {}
+[NETWORK]
 UDP_RECEIVER_PORT = {}
 TCP_RECEIVER_PORT = {}
 NEIGHBORS
-ZMQ_THREADS = 1
-ZMQ_ENABLED = false
+[ZMQ]
+ZMQ_PORT = {}
+ZMQ_IPC = ipc://pendulum/feeds/{}
 ZMQ_ENABLE_IPC = false
 ZMQ_ENABLE_TCP = false
-ZMQ_PORT = {}
-ZMQ_IPC = ipc://sbx/feeds/{}
-GRAPH_ENABLED = false
-HXI_DIR =  hxi
-HEADLESS = true
-DB_PATH = db
-LOCAL_SNAPSHOTS_DEPTH = 2
+[VALIDATION]
 #VALIDATOR =
 #VALIDATOR_SEED_PATH =
 #VALIDATOR_KEYFILE =
-SPAM_DELAY = 0
+ALPHA = 0
+[SNAPSHOTS]
 LOCAL_SNAPSHOTS_ENABLED = true
-LOCAL_SNAPSHOTS_BASE_PATH = snapshots
-SAVELOG_XML_FILE = /logback-save.xml
+LOCAL_SNAPSHOTS_INTERVAL_UNSYNCED = 1000
+LOCAL_SNAPSHOTS_INTERVAL_SYNCED = 1000
 """
 
 BASE_COMPOSE = """version: "3"
@@ -73,11 +74,11 @@ API_COMPOSE = """
       - ./helix-1.0/target:/target
       - ./helix-1.0/configs:/configs
       - ./logs:/logs
-      - ./dbs/node_{}_db:/db
-      - ./dbs/node_{}_log:/mainnet.log
-      - ./spent_addresses/node_{}_db:/spent-addresses-db
-      - ./spent_addresses/node_{}_log:/spent-addresses-log
-      - ./snapshots/node_{}_snapshots:/snapshots
+      - ./dbs/node_{}_db:/mainnet-db
+      - ./dbs/node_{}_log:/mainnet-db-log
+      - ./spent_addresses/node_{}_db:/mainnet-spent-addresses-db
+      - ./spent_addresses/node_{}_log:/mainnet-spent-addresses-log
+      - ./snapshots/node_{}_snapshots:/mainnet-snapshot
     environment:
       - JAVA_MAX_MEMORY=4096m
       - JAVA_MIN_MEMORY=256m
@@ -311,9 +312,10 @@ if __name__ == "__main__":
             #             )
             #         )
             #     )
-
-        NGINX_CONFIG += \
-            '      server {} weight=1;\n'.format(host+':'+str(api_port_start))
+        if not (node_id == 0):
+            NGINX_CONFIG += \
+                '      server {} weight=1;\n'.format(
+                                                host+':'+str(api_port_start))
         config_file = \
             config_file.replace('SPAM_DELAY = 0', 'SPAM_DELAY = {}'.format(
                 spam_interval
@@ -324,7 +326,7 @@ if __name__ == "__main__":
             node_id, api_port_start, api_port_start, udp_port_start,
             udp_port_start, host
         )
-        #prometheus_pushers.append(host+":2019")
+
         docker_inet_start += 1
         api_port_start += 1
         udp_port_start += 1

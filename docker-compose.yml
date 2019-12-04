@@ -19,11 +19,11 @@ services:
       - ./helix-1.0/target:/target
       - ./helix-1.0/configs:/configs
       - ./logs:/logs
-      - ./dbs/node_0_db:/db
-      - ./dbs/node_0_log:/mainnet.log
-      - ./spent_addresses/node_0_db:/spent-addresses-db
-      - ./spent_addresses/node_0_log:/spent-addresses-log
-      - ./snapshots/node_0_snapshots:/snapshots
+      - ./dbs/node_0_db:/mainnet-db
+      - ./dbs/node_0_log:/mainnet-db-log
+      - ./spent_addresses/node_0_db:/mainnet-spent-addresses-db
+      - ./spent_addresses/node_0_log:/mainnet-spent-addresses-log
+      - ./snapshots/node_0_snapshots:/mainnet-snapshot
     environment:
       - JAVA_MAX_MEMORY=4096m
       - JAVA_MIN_MEMORY=256m
@@ -45,11 +45,11 @@ services:
       - ./helix-1.0/target:/target
       - ./helix-1.0/configs:/configs
       - ./logs:/logs
-      - ./dbs/node_1_db:/db
-      - ./dbs/node_1_log:/mainnet.log
-      - ./spent_addresses/node_1_db:/spent-addresses-db
-      - ./spent_addresses/node_1_log:/spent-addresses-log
-      - ./snapshots/node_1_snapshots:/snapshots
+      - ./dbs/node_1_db:/mainnet-db
+      - ./dbs/node_1_log:/mainnet-db-log
+      - ./spent_addresses/node_1_db:/mainnet-spent-addresses-db
+      - ./spent_addresses/node_1_log:/mainnet-spent-addresses-log
+      - ./snapshots/node_1_snapshots:/mainnet-snapshot
     environment:
       - JAVA_MAX_MEMORY=4096m
       - JAVA_MIN_MEMORY=256m
@@ -71,11 +71,11 @@ services:
       - ./helix-1.0/target:/target
       - ./helix-1.0/configs:/configs
       - ./logs:/logs
-      - ./dbs/node_2_db:/db
-      - ./dbs/node_2_log:/mainnet.log
-      - ./spent_addresses/node_2_db:/spent-addresses-db
-      - ./spent_addresses/node_2_log:/spent-addresses-log
-      - ./snapshots/node_2_snapshots:/snapshots
+      - ./dbs/node_2_db:/mainnet-db
+      - ./dbs/node_2_log:/mainnet-db-log
+      - ./spent_addresses/node_2_db:/mainnet-spent-addresses-db
+      - ./spent_addresses/node_2_log:/mainnet-spent-addresses-log
+      - ./snapshots/node_2_snapshots:/mainnet-snapshot
     environment:
       - JAVA_MAX_MEMORY=4096m
       - JAVA_MIN_MEMORY=256m
@@ -97,11 +97,11 @@ services:
       - ./helix-1.0/target:/target
       - ./helix-1.0/configs:/configs
       - ./logs:/logs
-      - ./dbs/node_3_db:/db
-      - ./dbs/node_3_log:/mainnet.log
-      - ./spent_addresses/node_3_db:/spent-addresses-db
-      - ./spent_addresses/node_3_log:/spent-addresses-log
-      - ./snapshots/node_3_snapshots:/snapshots
+      - ./dbs/node_3_db:/mainnet-db
+      - ./dbs/node_3_log:/mainnet-db-log
+      - ./spent_addresses/node_3_db:/mainnet-spent-addresses-db
+      - ./spent_addresses/node_3_log:/mainnet-spent-addresses-log
+      - ./snapshots/node_3_snapshots:/mainnet-snapshot
     environment:
       - JAVA_MAX_MEMORY=4096m
       - JAVA_MIN_MEMORY=256m
