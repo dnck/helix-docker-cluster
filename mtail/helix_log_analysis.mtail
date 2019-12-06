@@ -1,7 +1,7 @@
 # Helix Log Analysis: Log parsing rules
 # Author: Daniel Cook
 # example usage:
-# ./mtail --one_shot --progs /home/hlx-dev/mtail/mtail_repo/examples/helix/test.mtail --logs /home/hlx-dev/mtail/mtail_repo/examples/helix/test.log --logtostderr -port 1234
+# ./mtail --one_shot --progs ~/.jenkins/workspace/dnck-pendulum-cluster/mtail/helix_log_analysis.mtail --logs ~/.jenkins/workspace/dnck-pendulum-cluster/tangle-node_0.log --logtostderr -port 1234
 
 gauge rcv by filename
 gauge brdcst by filename
@@ -9,7 +9,7 @@ gauge rqst by filename
 gauge reply by filename
 gauge stored by filename
 gauge solid by filename
-guage nonsolid by filename
+gauge nonsolid by filename
 counter addNeighbors by filename
 counter attachToTangle by filename
 counter broadcastTransactions by filename
@@ -71,7 +71,7 @@ counter confirmed_txhash by filename
 }
 
 /invalid_candidate/ {
-  incomplete_candidate[getfilename()]++
+  invalid_candidate[getfilename()]++
 }
 
 /invalid_tx_timestamp/ {
