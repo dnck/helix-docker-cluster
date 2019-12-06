@@ -8,7 +8,43 @@ gauge brdcst by filename
 gauge rqst by filename
 gauge reply by filename
 gauge stored by filename
- 
+gauge solid by filename
+guage nonsolid by filename
+counter addNeighbors by filename
+counter attachToTangle by filename
+counter broadcastTransactions by filename
+counter findTransactions by filename
+counter getBalances by filename
+counter getInclusionStates by filename
+counter getNeighbors by filename
+counter getNodeInfo by filename
+counter getNodeAPIConfiguration by filename
+counter getTips by filename
+counter getTransactionsToApprove by filename
+counter getTransactionStrings by filename
+counter interruptAttachingToTangle by filename
+counter removeNeighbors by filename
+counter storeTransactions by filename
+counter getMissingTransactions by filename
+counter checkConsistency by filename
+counter wereAddressesSpentFrom by filename
+counter invalid_tx_timestamp by filename
+counter invalid_tx_hash by filename
+counter incomplete_candidate by filename
+counter invalid_candidate by filename
+gauge sync_check by filename
+gauge num_steps by filename
+counter stored_tx by filename
+counter confirmed_txhash by filename
+
+/Stored_txhash/ {
+  stored_tx[getfilename()]++
+}
+
+/Confirmed_txhash/ {
+  confirmed_txhash[getfilename()]++
+}
+
 /rstat (?P<val1>\d+) (?P<val2>\d+) (?P<val3>\d+) (?P<val4>\d+) (?P<val5>\d+$)/ {
    rcv[getfilename()] = $val1
    brdcst[getfilename()] = $val2
@@ -17,3 +53,103 @@ gauge stored by filename
    stored[getfilename()] = $val5
 }
 
+/solid_nonSolid (?P<val1>\d+) (?P<val2>\d+)/ {
+   solid[getfilename()] = $val1
+   nonsolid[getfilename()] = $val2
+}
+
+/mctn (?P<val1>\d+)/ {
+   num_steps[getfilename()] = $val1
+}
+
+/sync_check (?P<val1>\d+)/ {
+   sync_check[getfilename()] = $val1
+}
+
+/incomplete_candidate/ {
+  incomplete_candidate[getfilename()]++
+}
+
+/invalid_candidate/ {
+  incomplete_candidate[getfilename()]++
+}
+
+/invalid_tx_timestamp/ {
+  invalid_tx_timestamp[getfilename()]++
+}
+
+/invalid_tx_hash/ {
+  invalid_tx_hash[getfilename()]++
+}
+
+/addNeighbors/ {
+  addNeighbors[getfilename()]++
+}
+
+/attachToTangle/ {
+  attachToTangle[getfilename()]++
+}
+
+/broadcastTransactions/ {
+  broadcastTransactions[getfilename()]++
+}
+
+/findTransactions/ {
+  findTransactions[getfilename()]++
+}
+
+/getBalances/ {
+  getBalances[getfilename()]++
+}
+
+/getInclusionStates/ {
+  getInclusionStates[getfilename()]++
+}
+
+/getNeighbors/ {
+  getNeighbors[getfilename()]++
+}
+
+/getNodeInfo/ {
+  getNodeInfo[getfilename()]++
+}
+
+/getNodeAPIConfiguration/ {
+  getNodeAPIConfiguration[getfilename()]++
+}
+
+/getTips/ {
+  getTips[getfilename()]++
+}
+
+/getTransactionsToApprove/ {
+  getTransactionsToApprove[getfilename()]++
+}
+
+/getTransactionStrings/ {
+  getTransactionStrings[getfilename()]++
+}
+
+/interruptAttachingToTangle/ {
+  interruptAttachingToTangle[getfilename()]++
+}
+
+/removeNeighbors/ {
+  removeNeighbors[getfilename()]++
+}
+
+/storeTransactions/ {
+  storeTransactions[getfilename()]++
+}
+
+/getMissingTransactions/ {
+  getMissingTransactions[getfilename()]++
+}
+
+/checkConsistency/ {
+  checkConsistency[getfilename()]++
+}
+
+/wereAddressesSpentFrom/ {
+  wereAddressesSpentFrom[getfilename()]++
+}
