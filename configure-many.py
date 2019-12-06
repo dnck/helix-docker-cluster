@@ -109,7 +109,7 @@ NGINX_COMPOSE = """
 
 NGINX_CONFIG = """
 upstream helix_cluster {
-
+      ip_hash;
 """
 
 PROMETHUES_CONFIG = """
@@ -161,7 +161,7 @@ MTAIL_YML = """
     networks:
       helix_network:
         ipv4_address: {}{}
-    command: ["-progs", "./helix_log_analysis.mtail", "-logs", "/logs/*.log"]
+    command: ["-progs", "./helix_log_analysis.mtail", "-logs", "/logs/tangle*.log"]
 """
 
 class SmallWorldTopology():
