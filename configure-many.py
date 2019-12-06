@@ -8,7 +8,7 @@ import networkx as nx
 
 api_host = "172.20.0."
 
-DOCKERFILE = """
+DOCKERFILE = '''
 FROM ubuntu:16.04 as builder
 
 FROM openjdk:jre-slim
@@ -21,8 +21,8 @@ EXPOSE {}:{}
 
 ENV JAVA_OPTIONS="-XX:+UnlockExperimentalVMOptions -XX:+DisableAttachMechanism -XX:InitiatingHeapOccupancyPercent=60 -XX:G1MaxNewSizePercent=75 -XX:MaxGCPauseMillis=10000 -XX:+UseG1GC" JAVA_MIN_MEMORY=2G JAVA_MAX_MEMORY=4G
 
-CMD java -Dinstance.name={} -jar ./target/*.jar --config ./configs/config{}.ini
-"""
+CMD java -Dspent.addresses.db="mainnet-" -Dinstance.name={} -jar ./target/*.jar --config ./configs/config{}.ini
+'''
 
 CONFIG =  """#NODE {} CONFIG
 [BRANCH]
@@ -49,6 +49,11 @@ ALPHA = 0
 LOCAL_SNAPSHOTS_ENABLED = true
 LOCAL_SNAPSHOTS_INTERVAL_UNSYNCED = 1000
 LOCAL_SNAPSHOTS_INTERVAL_SYNCED = 1000
+[PATHS]
+#This is only for refactoring branch Dec 6 2019
+DB_PATH = mainnet-db
+DB_LOG_PATH = mainnet-db-log
+LOCAL_SNAPSHOTS_BASE_PATH = mainnet-snapshot
 """
 
 BASE_COMPOSE = """version: "3"
