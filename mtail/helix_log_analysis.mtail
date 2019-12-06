@@ -53,7 +53,7 @@ counter confirmed_txhash by filename
    stored[getfilename()] = $val5
 }
 
-/solid_nonSolid (?P<val1>\d+) (?P<val2>\d+)/ {
+/solid_nonSolid = (?P<val1>\d+) (?P<val2>\d+)/ {
    solid[getfilename()] = $val1
    nonsolid[getfilename()] = $val2
 }
@@ -62,7 +62,7 @@ counter confirmed_txhash by filename
    num_steps[getfilename()] = $val1
 }
 
-/sync_check (?P<val1>\d+)/ {
+/sync_check = (?P<val1>\d+)/ {
    sync_check[getfilename()] = $val1
 }
 
