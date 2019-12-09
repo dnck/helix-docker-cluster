@@ -21,6 +21,10 @@ EXPOSE {}:{}
 
 ENV JAVA_OPTIONS="-XX:+UnlockExperimentalVMOptions -XX:+DisableAttachMechanism -XX:InitiatingHeapOccupancyPercent=60 -XX:G1MaxNewSizePercent=75 -XX:MaxGCPauseMillis=10000 -XX:+UseG1GC" JAVA_MIN_MEMORY=2G JAVA_MAX_MEMORY=4G
 
+RUN mkdir /mainnet-snapshot
+COPY ./snapshotTestnet.txt /mainnet-snapshot/snapshotMainnet.txt
+COPY ./snapshotTestnet.sig /mainnet-snapshot/snapshotMainnet.sig
+
 CMD java -Dspent.addresses.db="mainnet-" -Dinstance.name={} -jar ./target/*.jar --config ./configs/config{}.ini
 '''
 
@@ -57,6 +61,8 @@ LOCAL_SNAPSHOTS_INTERVAL_SYNCED = 1000
 DB_PATH = mainnet-db
 DB_LOG_PATH = mainnet-db-log
 LOCAL_SNAPSHOTS_BASE_PATH = mainnet-snapshot
+SNAPSHOT_FILE = snapshotTestnet.txt
+SNAPSHOT_SIG = snapshotTestnet.sig
 """
 
 BASE_COMPOSE = """version: "3"

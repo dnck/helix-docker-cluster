@@ -11,4 +11,8 @@ EXPOSE 5103:5103
 
 ENV JAVA_OPTIONS="-XX:+UnlockExperimentalVMOptions -XX:+DisableAttachMechanism -XX:InitiatingHeapOccupancyPercent=60 -XX:G1MaxNewSizePercent=75 -XX:MaxGCPauseMillis=10000 -XX:+UseG1GC" JAVA_MIN_MEMORY=2G JAVA_MAX_MEMORY=4G
 
+RUN mkdir /mainnet-snapshot
+COPY ./snapshotTestnet.txt /mainnet-snapshot/snapshotMainnet.txt
+COPY ./snapshotTestnet.sig /mainnet-snapshot/snapshotMainnet.sig
+
 CMD java -Dspent.addresses.db="mainnet-" -Dinstance.name=node_3 -jar ./target/*.jar --config ./configs/config3.ini
